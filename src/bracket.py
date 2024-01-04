@@ -74,8 +74,7 @@ class Round:
     def get_teams(self) -> set[Team]:
         teams = map(lambda x: x.teams, self.matchups)
         return set(chain.from_iterable(teams))
-    
+
     def get_players(self) -> set:
         players = map(lambda x: x.players, self.get_teams())
         return set(chain.from_iterable(players))
-
