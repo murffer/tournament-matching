@@ -13,6 +13,7 @@
       "vscode": {
         "extensions": [
           "ms-toolsai.jupyter",
+          "ms-python.flake8",
           "ms-python.python"
         ]
       }
