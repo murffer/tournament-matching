@@ -1,5 +1,5 @@
 import unittest
-from src.bracket import Team, Matchup, Round, unique_matchup, unique_teams
+from src.bracket import Team, Matchup, Round
 
 
 class TestTeam(unittest.TestCase):
@@ -59,29 +59,18 @@ class TestRound(unittest.TestCase):
 
     def test_round_construct(self):
         r = Round([self.m1, self.m2])
-        self.assertEqual(r.matchups, [self.m1, self.m2])
+        self.assertEqual(r.matchups, frozenset([self.m1, self.m2]))
 
     def test_get_teams(self):
         r = Round([self.m1, self.m2])
-        self.assertListEqual(
-            r.get_teams(), [Team(self.a), Team(self.b), Team(self.c), Team(self.d)]
+        self.assertSetEqual(
+            r.get_teams(), {Team(self.a), Team(self.b), Team(self.c), Team(self.d)}
         )
 
     def test_get_players(self):
-        # elf.a | self.b | self.c | self.d
-        pass
-
-
-class TestRules(unittest.TestCase):
-    def test_unique_matchup(self):
-        u0 = ((0, 1), (2, 3))
-        self.assertTrue(unique_matchup(u0))
-
-        u1 = ((0, 1), (0, 2))
-        self.assertFalse(unique_matchup(u1))
-
-    def test_unqiue_teams(self):
-        pass
+        r = Round([self.m1, self.m2])
+        players = self.a | self.b | self.c | self.d
+        self.assertSetEqual(r.get_players(), players)
 
 
 if __name__ == "__main__":

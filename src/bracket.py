@@ -63,38 +63,19 @@ class Matchup:
 class Round:
     """Matchups of a given round"""
 
-    def __init__(self, matchups: list[Matchup]):
-        self._matchups = matchups
+    def __init__(self, matchups: set[Matchup]):
+        # All Matchups must be unique
+        self._matchups = frozenset(matchups)
 
     @property
     def matchups(self):
         return self._matchups
 
-    def get_teams(self) -> list[Team]:
+    def get_teams(self) -> set[Team]:
         teams = map(lambda x: x.teams, self.matchups)
-        return list(chain.from_iterable(teams))
+        return set(chain.from_iterable(teams))
+    
+    def get_players(self) -> set:
+        players = map(lambda x: x.players, self.get_teams())
+        return set(chain.from_iterable(players))
 
-
-def get_teams(round_i):
-    """ """
-    # All of the teams in a round
-    teams_i = [team_i for team in round_i for team_i in team]
-    return teams_i
-
-
-def get_players(matchup_i):
-    # Player can't play themselves in a matchup
-    players_i = [player_i for team in matchup_i for player_i in team]
-    return players_i
-
-
-def unique_teams(round_i) -> bool:
-    # Cannot have the same team playing twice in a round
-    teams_i = get_teams(round_i)
-    return len(teams_i) == len(set(teams_i))
-
-
-def unique_matchup(matchup_i) -> bool:
-    # Player can't play themselves in a matchup
-    players_i = [player_i for team in matchup_i for player_i in team]
-    return len(players_i) == len(set(players_i))
