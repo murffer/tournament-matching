@@ -32,6 +32,26 @@ class TestMatchup(unittest.TestCase):
         m = Matchup(Team(a), Team(a))
         self.assertFalse(m.unique_players())
 
+    def test_matchup_equality(self):
+        a = {0, 1}
+        b = {2, 3}
+        c = {4, 5}
+        d = {6, 7}
+        m1 = Matchup(Team(a), Team(b))
+        m2 = Matchup(Team(c), Team(d))
+        self.assertEqual(m1, m1)
+        self.assertNotEqual(m1, m2)
+
+    def test_matchup_hash(self):
+        a = {0, 1}
+        b = {2, 3}
+        c = {4, 5}
+        d = {6, 7}
+        m1 = Matchup(Team(a), Team(b))
+        m2 = Matchup(Team(c), Team(d))
+        self.assertEqual(hash(m1), hash(m1))
+        self.assertNotEqual(hash(m1), hash(m2))
+
 
 class TestRound(unittest.TestCase):
     a = {0, 1}

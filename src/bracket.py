@@ -32,7 +32,7 @@ class Matchup:
     """Matchup between two teams"""
 
     def __init__(self, a: Team, b: Team):
-        self._teams = [a, b]
+        self._teams = frozenset({a, b})
 
     @property
     def teams(self):
@@ -43,6 +43,9 @@ class Matchup:
         if isinstance(other, self.__class__):
             return self.teams == other.teams
         return False
+
+    def __hash__(self):
+        return hash(self.teams)
 
     def get_players(self) -> list:
         """Gets the players of the teams in a matchup
