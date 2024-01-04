@@ -21,16 +21,12 @@ class TestMatchup(unittest.TestCase):
         a = {0, 1, 2}
         b = {3, 4, 5}
         m = Matchup(Team(a), Team(b))
-        self.assertListEqual(m.get_players(), list(a | b))
+        self.assertSetEqual(m.get_players(), a | b)
 
-    def test_unique_players(self):
-        a = {0, 1, 2}
-        b = {3, 4, 5}
-        m = Matchup(Team(a), Team(b))
-        self.assertTrue(m.unique_players())
-
-        m = Matchup(Team(a), Team(a))
-        self.assertFalse(m.unique_players())
+    def test_unique_teams(self):
+        t = Team({0, 1})
+        with self.assertRaises(ValueError):
+            Matchup(t, t)
 
     def test_matchup_equality(self):
         a = {0, 1}

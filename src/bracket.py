@@ -32,6 +32,9 @@ class Matchup:
     """Matchup between two teams"""
 
     def __init__(self, a: Team, b: Team):
+        # Check that the teams are not the same
+        if a == b:
+            raise ValueError("Teams must be unique")
         self._teams = frozenset({a, b})
 
     @property
@@ -47,23 +50,14 @@ class Matchup:
     def __hash__(self):
         return hash(self.teams)
 
-    def get_players(self) -> list:
+    def get_players(self) -> set:
         """Gets the players of the teams in a matchup
 
         Returns:
-            list: a list (no order) of the players
+            set: a set (no order) of the players
         """
         players = map(lambda x: x.players, self.teams)
-        return list(chain.from_iterable(players))
-
-    def unique_players(self) -> bool:
-        """Determines if the players are unique in the matchup
-
-        Returns:
-            bool: true if the players are unique
-        """
-        players = self.get_players()
-        return len(players) == len(set(players))
+        return set(chain.from_iterable(players))
 
 
 class Round:
