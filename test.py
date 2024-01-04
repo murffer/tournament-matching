@@ -11,6 +11,10 @@ class TestTeam(unittest.TestCase):
         self.assertTrue(Team({1,2}) == Team({2,1}))
         self.assertFalse(Team({1,2}) == Team({2,3}))
 
+    def test_team_hash(self):
+        self.assertTrue(hash(Team({1,2})) == hash(Team({2,1})))
+        self.assertFalse(hash(Team({1,2})) == hash(Team({2,3})))
+
 class TestMatchup(unittest.TestCase):
 
     def test_matchup_construct(self):
